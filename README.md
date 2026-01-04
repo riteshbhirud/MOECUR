@@ -1,7 +1,7 @@
 # Relaxed CUR
 
 Bridging Interpretability and Accuracy in Matrix Decomposition for MoE Compression.
-**Currently Works only with deepseek moe 16B**
+**Currently Works only with deepseek moe 16B and Mixtral-8x7B**
 ## Overview
 
 Standard CUR decomposition selects exact columns and rows from the original matrix, but correlated selections lead to ~72% reconstruction error. Relaxed CUR adds small learned offsets to selected columns/rows, making them "effectively orthogonal" while maintaining interpretability. This achieves much less error while preserving CUR's interpretability benefits and minimal perplexity degradation
