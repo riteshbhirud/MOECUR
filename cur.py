@@ -1,7 +1,7 @@
 import math
 import torch
 from torch import linalg as LA
-from typing import Tuple, Optional, List
+from typing import Tuple, Optional, Literal, List
 
 
 @torch.no_grad()

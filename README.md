@@ -4,7 +4,7 @@ Bridging Interpretability and Accuracy in Matrix Decomposition for MoE Compressi
 **Currently Works only with deepseek moe 16B**
 ## Overview
 
-Standard CUR decomposition selects exact columns and rows from the original matrix, but correlated selections lead to ~72% reconstruction error. Relaxed CUR adds small learned offsets to selected columns/rows, making them "effectively orthogonal" while maintaining interpretability. This achieves ~42% error while preserving CUR's interpretability benefits.
+Standard CUR decomposition selects exact columns and rows from the original matrix, but correlated selections lead to ~72% reconstruction error. Relaxed CUR adds small learned offsets to selected columns/rows, making them "effectively orthogonal" while maintaining interpretability. This achieves much less error while preserving CUR's interpretability benefits and minimal perplexity degradation
 
 **Key Insight:**
 ```
@@ -27,13 +27,36 @@ pip install -e .
 ## Usage
 
 ```bash
-python main.py \
+#DEEPSEEK example 20% compression
+#gives around 1.28x perplexity degradation (bit worse than SVD but offers interpretability)
+python relaxed_cur_deepseek.py \
     --model deepseek-ai/deepseek-moe-16b-base \
-    --selected_layers 1,2,3,4,5 \
-    --rank 512 \
+    --selected_layers all \
+    --rank 564 \
     --n_iterations 500 \
     --lambda_reg 0.1 \
-    --evaluate
+    --skip_finetune \
+    --evaluate \
+    --run_analysis \
+    --run_ablations \
+    --no_parallel \
+    --save_path ./results/deepseek_20pct_compression \
+    --verbose
+
+#MIXTRAL Mixtral-8x7B 20% compression
+python relaxed_cur_mixtral.py \
+    --model mistralai/Mixtral-8x7B-v0.1 \
+    --selected_layers all \
+    --rank 2200 \
+    --n_iterations 500 \
+    --lambda_reg 0.1 \
+    --skip_finetune \
+    --evaluate \
+    --run_analysis \
+    --no_parallel \
+    --save_path ./results/mixtral_20pct_compression \
+    --verbose
+
 ```
 
 ### Arguments
@@ -53,22 +76,6 @@ python main.py \
 | `--skip_finetune` | `False` | Skip fine-tuning stage |
 | `--evaluate` | `False` | Evaluate perplexity |
 | `--save_path` | `None` | Path to save compressed model |
-
-## Project Structure
-
-```
-relaxed-cur/
-├── main.py                    # CLI entry point
-├── relaxed_cur/
-│   ├── __init__.py
-│   ├── decomposition.py       # RelaxedCURResult, optimization
-│   ├── modules.py             # Projection, Expert, MoE modules
-│   ├── compressor.py          # RelaxedCURCompressor
-│   ├── finetuner.py           # Knowledge distillation
-│   └── utils.py               # Calibration, evaluation utilities
-├── requirements.txt
-└── setup.py
-```
 
 ## Interpretability
 
