@@ -25,7 +25,7 @@ pip install -e .
 ```
 
 ## Usage
-
+Please use the --no_parallel arg as in the example as parallel still needs work.
 ```bash
 #DEEPSEEK example 20% compression
 #gives around 1.28x perplexity degradation (bit worse than SVD but offers interpretability)
