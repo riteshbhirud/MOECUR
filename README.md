@@ -27,8 +27,6 @@ pip install -e .
 ## Usage
 Please use the --no_parallel arg as in the example as parallel still needs work.
 ```bash
-#DEEPSEEK example 20% compression
-#gives around 1.28x perplexity degradation (bit worse than SVD but offers interpretability)
 python relaxed_cur_deepseek.py \
     --model deepseek-ai/deepseek-moe-16b-base \
     --selected_layers all \
@@ -43,7 +41,6 @@ python relaxed_cur_deepseek.py \
     --save_path ./results/deepseek_20pct_compression \
     --verbose
 
-#MIXTRAL Mixtral-8x7B 20% compression
 python relaxed_cur_mixtral.py \
     --model mistralai/Mixtral-8x7B-v0.1 \
     --selected_layers all \
